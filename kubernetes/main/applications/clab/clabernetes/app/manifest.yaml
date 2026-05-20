@@ -328,7 +328,7 @@ spec:
       serviceAccountName: "clabernetes-service-account"
       initContainers:
         - name: init
-          image: "ghcr.io/srl-labs/clabernetes/clabernetes-manager:0.3.1"
+          image: "ghcr.io/srl-labs/clabernetes/clabernetes-manager:0.5.0"
           imagePullPolicy: IfNotPresent
           command: ["/clabernetes/manager", "run", "--initializer"]
           env:
@@ -356,7 +356,7 @@ spec:
               cpu: 50m
       containers:
         - name: manager
-          image: "ghcr.io/srl-labs/clabernetes/clabernetes-manager:0.3.1"
+          image: "ghcr.io/srl-labs/clabernetes/clabernetes-manager:0.5.0"
           imagePullPolicy: IfNotPresent
           command: ["/clabernetes/manager", "run"]
           env:
