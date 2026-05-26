@@ -3,7 +3,7 @@
 environments:
   default:
     values:
-      - clusterRoot: "/home/elliana/Code/Homelab/K8sFluxNouveau/kubernetes/testing"
+      - clusterRoot: "/home/elliana/Code/Homelab/kubernetes/kubernetes/testing"
 templates:
   default:
     chart: '{{ (fromYaml (tpl (readFile "./templates/release.yaml.gotmpl") .)).chart }}'
