@@ -104,14 +104,14 @@ releases:
 #    needs:
 #      - external-secrets/external-secrets
 
-  - name: flux-operator
+  - name: operator
     namespace: flux-system
     inherit:
       - template: default
 #    needs:
 #      - external-secrets/onepassword-connect
 
-  - name: flux-instance
+  - name: instance
     namespace: flux-system
     inherit:
       - template: default

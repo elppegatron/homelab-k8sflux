@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: flux-operator
   interval: 1h
-  path: ./kubernetes/testing/apps/flux-system/flux-instance
+  path: ./kubernetes/testing/apps/flux-system/instance/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ spec:
   dependsOn:
     - name: flux-instance
   interval: 1h
-  path: ./kubernetes/testing/apps/flux-system/flux-instance/roots
+  path: ./kubernetes/testing/apps/flux-system/instance/app/roots
   prune: true
   sourceRef:
     kind: GitRepository

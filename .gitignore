@@ -6,3 +6,4 @@ talosconfig
 kubernetes/main/applications/***
 *.sql.gz
 kubernetes/old
+talos/talos-v1.13.2-fadf0915.iso
