@@ -116,4 +116,4 @@ releases:
     inherit:
       - template: default
     needs:
-      - flux-system/flux-operator
+      - flux-system/operator
