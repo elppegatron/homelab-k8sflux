@@ -6,11 +6,11 @@ metadata:
   name: flux-operator
 spec:
   interval: 1h
-  path: ./kubernetes/apps/flux-system/operator/app
+  path: ./kubernetes/testing/apps/flux-system/operator/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: cluster-flux-public
     namespace: flux-system
   targetNamespace: flux-system
   wait: true
