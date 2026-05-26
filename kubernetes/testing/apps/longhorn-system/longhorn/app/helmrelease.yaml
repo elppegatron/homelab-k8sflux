@@ -23,7 +23,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: longhorn
-      version: 1.9.2
+      version: 1.11.2
   interval: 1m0s
   values:
     csi:
