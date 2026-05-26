@@ -25,3 +25,9 @@ spec:
         name: longhorn
       version: 1.9.2
   interval: 1m0s
+  values:
+    csi:
+      attacherReplicaCount: 1
+      provisionerReplicaCount: 1
+      resizerReplicaCount: 1
+      snapshotterReplicaCount: 1
