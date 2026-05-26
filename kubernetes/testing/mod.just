@@ -80,3 +80,16 @@ ready:
             sleep 5
         done
     fi
+
+
+
+# Flux Recipes
+[group: 'Flux']
+[script]
+sync-all:
+    kubectl get gitrepositories --all-namespaces --no-headers | awk '{print $1, $2}' \
+        | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate gitrepository/$1 reconcile.fluxct.io/requestedAt=$(date +%s) --field-manager=flux-client-side-apply --overwrite'
+    kubectl get kustomization --all-namespaces --no-headers | awk '{print $1, $2}' \
+        | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate kustomization/$1 reconcile.fluxcd.io/requestedAt="$(date +%s)" --field-manager=flux-client-side-apply --overwrite'

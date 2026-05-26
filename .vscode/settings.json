@@ -30,5 +30,8 @@
   "editor.hover.delay": 1500,
   "editor.renderWhitespace": "all",
   "files.trimTrailingWhitespace": true,
-  "ansible.python.interpreterPath": "/usr/bin/python"
+  "ansible.python.interpreterPath": "/usr/bin/python",
+  "nixEnvSelector.nixFile": "${workspaceFolder}/flake.nix",
+  "nixEnvSelector.useFlakes": true,
+  "nixEnvSelector.flakeShell": "default"
 }

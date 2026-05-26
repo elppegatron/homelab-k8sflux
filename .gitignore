@@ -1,3 +1,8 @@
+.direnv
+.decrypted~*
+.private/
+kubeconfig
+talosconfig
+kubernetes/main/applications/***
 *.sql.gz
-**/.decrypted*
-.private/***
+kubernetes/old

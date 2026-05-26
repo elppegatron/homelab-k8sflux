@@ -12,24 +12,60 @@
         pkgs = import nixpkgs {
           inherit system;
         };
+        # Override the default kubernetes-helm to use version 4.2.0
+        k8shelm = pkgs.buildGoModule rec {
+          pname = "kubernetes-helm";
+          version = "4.2.0";
+          src = pkgs.fetchFromGitHub {
+            owner = "helm";
+            repo = "helm";
+            rev = "v${version}";
+            #sha256 = pkgs.lib.fakeHash;
+            sha256 = "sha256-Wyihzf7KpnVuIdp5lmjhB7uLAGgtmI0TXYl29uaVC5Y=";
+          };
+          doCheck = false;
+          #vendorHash = pkgs.lib.fakeHash;
+          vendorHash = "sha256-QTDC0v0BPE3FoK9AAq1n2jWxOE9gB9OsoY2wnpcCDUQ=";
+          subPackages = [ "cmd/helm" ];
+          meta = with pkgs.lib; {
+            description = "The Kubernetes Package Manager";
+            homepage = "https://helm.sh/";
+            license = licenses.asl20;
+            maintainers = with maintainers; [ ];  # optional
+          };
+        };
       in {
         devShells.default = pkgs.mkShell {
-          name = "jekyll-shell";
+          name = "kubernetes-shell";
 
-          # Core packages for Jekyll development
           buildInputs = with pkgs; [
+            bitwarden-cli
+            minijinja
+            kustomize
+            helmfile
             talosctl
+            cilium-cli
+            helm-ls
+            just-lsp
+            k8shelm
+            k9s
+            just
+            gum
+            jq
+            yq-go
+          ] ++ [
+            kubectl
+            kubescape
+            # Kubectl addons
+            kubectl-cnpg
+            kubectl-graph
           ];
 
-          # Optional: automatically install gems when entering the shell
-          # (if a Gemfile exists)
           shellHook = ''
-            if [ -f Gemfile ]; then
-              echo "Gemfile found, running bundle install..."
-              bundle install
-            fi
+            echo "Ready!"
           '';
         };
+
       }
     );
 }
