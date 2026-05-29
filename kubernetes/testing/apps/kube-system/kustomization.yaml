@@ -7,3 +7,5 @@ namespace: kube-system
 resources:
   - ./namespace.yaml
   # Flux Kustomizations
+  - ./cilium/ks.yaml
+  - ./coredns/ks.yaml
