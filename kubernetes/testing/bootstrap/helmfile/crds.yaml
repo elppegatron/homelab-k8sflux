@@ -33,3 +33,8 @@ releases:
     namespace: o11y
     inherit:
       - template: default
+
+  - name: external-secrets
+    namespace: external-secrets
+    inherit:
+      - template: default
