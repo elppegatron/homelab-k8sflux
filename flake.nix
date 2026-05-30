@@ -49,6 +49,8 @@
             just-lsp
             fluxcd
             k8shelm
+            sops
+            openbao
             k9s
             just
             gum
