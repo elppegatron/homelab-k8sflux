@@ -93,5 +93,28 @@ releases:
     namespace: flux-system
     inherit:
       - template: default
+    hooks:
+      - # Wait for CRDs to be available
+        command: kubectl
+        args:
+          - wait
+          - --for=create
+          - crd/kustomizations.kustomize.toolkit.fluxcd.io
+          - --timeout=2m
+        events:
+          - postsync
+        showlogs: true
+      - # Apply Resources
+        command: kubectl
+        args:
+          - apply
+          - --namespace={{ .Release.Namespace }}
+          - --server-side
+          - --force-conflicts
+          - --kustomize
+          - ../../apps/{{ .Release.Namespace }}/{{ .Release.Name }}/roots
+        events:
+          - postsync
+        showlogs: true
     needs:
       - flux-system/operator
