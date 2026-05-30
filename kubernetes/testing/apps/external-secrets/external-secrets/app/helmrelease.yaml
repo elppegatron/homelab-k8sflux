@@ -10,6 +10,8 @@ spec:
     name: external-secrets
   interval: 1h
   values:
+    rbac:
+      create: true
     leaderElect: true
     serviceMonitor:
       enabled: true
