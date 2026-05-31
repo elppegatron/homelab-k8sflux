@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: jellyfin
+  interval: 1h
+  values:
+    controllers:
+      jellyfin:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: 10.11.10@sha256:6497f0245de93fac642926c065b427362ca5e626e659f690516599c8c3817a38
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            #resources:
+            #  limits:
+            #    cpu: 6
+            #    memory: 5Gi
+            #  requests:
+            #    cpu: 500m
+            #    memory: 2400Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            port: 8096
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.zynthovian.xyz"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    persistence:
+      media:
+        type: nfs
+        server: xenia.zynthovian.xyz
+        path: /srv/media/Series
+        globalMounts:
+          - path: /media
+            readOnly: true
+      dri:
+        hostPath: /dev/dri
+        type: hostPath
+      cache:
+        type: emptyDir
