@@ -1,6 +1,8 @@
 ---
 version: v1alpha1
 machine:
+  time:
+    timezone: America/Detroit
   ca:
     crt: {{ MACHINE_CA_CRT }}
     {% if CONTROLPLANE %}
@@ -45,6 +47,7 @@ machine:
         noatime=True
         rsize=1048576
         wsize=1048576
+        resvport=True
   install:
     diskSelector:
       model: QEMU HARDDISK
