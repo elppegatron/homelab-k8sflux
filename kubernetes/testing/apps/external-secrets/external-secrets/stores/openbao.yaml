@@ -58,7 +58,6 @@ apiVersion: external-secrets.io/v1
 kind: ClusterSecretStore
 metadata:
   name: openbao-store
-  namespace: external-secrets
 spec:
   provider:
     vault:
@@ -71,6 +70,7 @@ spec:
           role: "external-secrets"
           serviceAccountRef:
             name: "external-secrets"
+            namespace: "external-secrets"
       caProvider:
         type: Secret
         name: zynthovian-xyz-ca
