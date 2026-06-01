@@ -12,5 +12,5 @@ spec:
     kind: GitRepository
     name: cluster-flux-public
     namespace: flux-system
-  targetNamespace: default
+  targetNamespace: media
   wait: false
