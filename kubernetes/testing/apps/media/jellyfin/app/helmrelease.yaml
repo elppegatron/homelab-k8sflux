@@ -51,13 +51,19 @@ spec:
           - name: envoy-internal
             namespace: network
     persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
       media:
         type: nfs
         server: xenia.zynthovian.xyz
-        path: /srv/media/Series
+        path: /srv/media/
         globalMounts:
-          - path: /media
+          - path: /media/Series
             readOnly: true
+            subPath: Series
+          - path: /media/Movies
+            readOnly: true
+            subPath: Movies
       dri:
         hostPath: /dev/dri
         type: hostPath

@@ -5,8 +5,14 @@ kind: Kustomization
 metadata:
   name: jellyfin
 spec:
+  components:
+    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/testing/apps/media/jellyfin/app
+  postBuild:
+    substitute:
+      APP: jellyfin
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   sourceRef:
     kind: GitRepository
