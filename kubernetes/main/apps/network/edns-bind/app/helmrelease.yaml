@@ -1,0 +1,64 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app edns-bind
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: edns-bind
+  interval: 1h
+  values:
+    fullnameOverride: *app
+    provider:
+      name: rfc2136
+    env:
+      - name: &name EXTERNAL_DNS_RFC2136_HOST
+        valueFrom:
+          secretKeyRef:
+            name: &secret edns-bind-rfc2136
+            key: *name
+      - name: &name EXTERNAL_DNS_RFC2136_PORT
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *name
+      - name: &name EXTERNAL_DNS_RFC2136_ZONE
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *name
+      - name: &name EXTERNAL_DNS_RFC2136_TSIG_AXFR
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *name
+      - name: &name  EXTERNAL_DNS_RFC2136_TSIG_KEYNAME
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *name
+      - name: &name EXTERNAL_DNS_RFC2136_TSIG_SECRET_ALG
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *name
+      - name: &name EXTERNAL_DNS_RFC2136_TSIG_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: *secret
+            key: *name
+    triggerLoopOnEvent: true
+    policy: sync
+    sources:
+      - service
+      - gateway-httproute
+    txtOwnerId: internal
+    txtPrefix: k8s.main.
+    domainFilters:
+      - zynthovian.xyz
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret

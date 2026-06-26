@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+environments:
+  default:
+    values:
+      - clusterRoot: "/home/elliana/Code/Homelab/Kubernetes/kubernetes/main"
+templates:
+  default:
+    chart: '{{ (fromYaml (tpl (readFile "./templates/release.yaml.gotmpl") .)).chart }}'
+    version: '{{ (fromYaml (tpl (readFile "./templates/release.yaml.gotmpl") .)).version }}'
+    values:
+      - ./templates/values.yaml.gotmpl

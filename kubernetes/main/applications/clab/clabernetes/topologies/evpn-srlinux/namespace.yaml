@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-    name: c9s-srlinux-clos
-    labels:
-        pod-security.kubernetes.io/enforce: privileged

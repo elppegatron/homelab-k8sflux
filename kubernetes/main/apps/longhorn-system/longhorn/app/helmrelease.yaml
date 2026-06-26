@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app longhorn
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: longhorn
+  interval: 1m0s
+  values:
+    csi:
+      attacherReplicaCount: 1
+      provisionerReplicaCount: 1
+      resizerReplicaCount: 1
+      snapshotterReplicaCount: 1
+    longhornUI:
+      replicas: 1
+    httproute:
+      enabled: true
+      hostnames:
+          - longhorn.zynthovian.xyz
+      parentRefs:
+        - name: envoy-internal
+          namespace: network
+    metrics:
+      serviceMonitor:
+        enabled: true
